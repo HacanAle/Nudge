@@ -1,0 +1,10 @@
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+*.log
+
+# Built installers are published as GitHub release assets, not committed.
+installer/
+*.exe
+*.msi

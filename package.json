@@ -1,0 +1,39 @@
+{
+  "name": "nudge",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Reminders for Windows that wait for an answer.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "check": "node scripts/check-themes.mjs && svelte-check --tsconfig ./tsconfig.json",
+    "tauri": "tauri",
+    "check:themes": "node scripts/check-themes.mjs",
+    "test": "node --test src/lib/parse.test.ts src/lib/links.test.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@fontsource-variable/pixelify-sans": "^5.3.0",
+    "@fontsource/abril-fatface": "^5.3.0",
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/chakra-petch": "^5.3.0",
+    "@fontsource/courier-prime": "^5.3.0",
+    "@fontsource/libre-caslon-text": "^5.3.0",
+    "@fontsource/share-tech-mono": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0",
+    "@tauri-apps/api": "^2.12.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tauri-apps/cli": "^2.12.1",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.7.6",
+    "typescript": "^5.9.0",
+    "vite": "^8.3.3"
+  }
+}

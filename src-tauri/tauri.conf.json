@@ -1,0 +1,105 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Nudge",
+  "version": "0.1.0",
+  "identifier": "com.nudge.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Nudge",
+        "url": "index.html",
+        "width": 940,
+        "height": 700,
+        "minWidth": 760,
+        "minHeight": 560,
+        "center": true,
+        "decorations": false,
+        "resizable": true,
+        "visible": false,
+        "backgroundColor": "#141311",
+        "create": false
+      },
+      {
+        "label": "overlay",
+        "title": "Nudge alert",
+        "url": "index.html",
+        "width": 528,
+        "height": 170,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "focus": false,
+        "focusable": false,
+        "visible": false,
+        "create": false
+      },
+      {
+        "label": "quick",
+        "title": "Nudge quick add",
+        "url": "index.html",
+        "width": 608,
+        "height": 210,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "focus": false,
+        "focusable": true,
+        "visible": false,
+        "create": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src ipc: http://ipc.localhost",
+      "devCsp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Productivity",
+    "shortDescription": "Reminders that drop in at the top of your screen.",
+    "longDescription": "Nudge shows a floating alert when a reminder is due, with Done and Snooze buttons. Add reminders from anywhere with a global shortcut, in plain language.",
+    "windows": {
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
+      },
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "sidebarImage": "installer-assets/sidebar.bmp",
+        "headerImage": "installer-assets/header.bmp",
+        "installMode": "currentUser",
+        "languages": [
+          "English"
+        ]
+      }
+    }
+  }
+}

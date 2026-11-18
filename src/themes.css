@@ -1,0 +1,1019 @@
+/*
+ * Themes.
+ *
+ * Every component reads its look from the custom properties below, so a theme is just a complete set
+ * of values. A theme can be applied to <html> (the real UI) or to any element (the previews in
+ * Settings), which is why each block defines *every* token instead of inheriting any.
+ *
+ *   slab      Flat design           orchard   Apple-like         vitrine    Glassmorphism
+ *   beige     Retro                 punk      Punk               voltage    Electric
+ *   handbill  Old-fashioned ad      nudge     The app icon
+ *
+ * Rules of the house: no purple or violet anywhere, one main accent per theme.
+ * `scripts/check-themes.mjs` fails the build if a theme forgets a token.
+ */
+
+/* VT323 renders small; this face scales it to sit level with the other mono fonts. */
+@font-face {
+  font-family: 'VT323 Nudge';
+  src: url('../node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+  size-adjust: 128%;
+}
+
+/* ════════════════════════════ SLAB — flat design ════════════════════════════
+   Solid surfaces and hairlines. Follows the Windows light/dark setting. */
+:root,
+[data-theme='slab'] {
+  color-scheme: light dark;
+
+  --font: 'Geist Variable', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-display: var(--font);
+  --mono: 'Geist Mono Variable', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --display-case: none;
+  --display-weight: 600;
+  --display-tracking: -0.015em;
+  --title-size: 19px;
+  --title-lh: 1.28;
+  --h1-size: 26px;
+
+  --bg: #f5f2eb;
+  --surface: #fffdf8;
+  --surface-2: #efebe1;
+  --hover: rgba(54, 40, 14, 0.055);
+  --border: #dcd6c9;
+  --border-strong: #b9b2a2;
+  --text: #1c1a16;
+  --dim: #6a6457;
+  --faint: #8f8878;
+  --ink: #1c1a16;
+  --on-ink: #f5f2eb;
+  --accent: #d4561c;
+  --accent-text: #b04410;
+  --danger: #b3261e;
+
+  --radius: 6px;
+  --btn-radius: 6px;
+  --radius-lg: 10px;
+
+  --card-bg: var(--surface);
+  --card-tint: none;
+  --card-border: 1px solid var(--border-strong);
+  --card-shadow: 0 20px 44px -16px rgba(52, 30, 6, 0.42), 0 2px 8px rgba(52, 30, 6, 0.16);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 18px;
+  --head-pad: 12px 10px 0 18px;
+  --head-bg: transparent;
+  --head-color: var(--dim);
+  --foot-bg: var(--surface-2);
+  --foot-border: 1px solid var(--border);
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: transparent;
+  --btn-border: 1px solid var(--border-strong);
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-color: var(--text);
+  --split-divider: 1px solid var(--border-strong);
+  --primary-bg: var(--ink);
+  --primary-color: var(--on-ink);
+  --primary-border: 1px solid transparent;
+  --primary-shadow: none;
+  --primary-shadow-active: none;
+  --press: translateY(1px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: var(--bg);
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: var(--surface);
+  --panel-border: 1px solid var(--border-strong);
+  --panel-shadow: none;
+  --panel-filter: none;
+  --list-bg: transparent;
+  --list-border: 0 solid transparent;
+  --list-shadow: none;
+  --list-pad: 0px;
+  --row-bleed: -8px;
+  --row-pad: 13px 8px;
+  --row-border: 1px solid var(--border);
+  --row-last-border: 1px solid var(--border);
+
+  --input-bg: var(--bg);
+  --input-border: 1px solid var(--border);
+  --input-shadow: none;
+  --seg-bg: var(--bg);
+  --seg-border: 1px solid var(--border);
+  --seg-radius: 6px;
+  --seg-shadow: none;
+  --seg-pad: 0px;
+  --seg-divider: 1px solid var(--border);
+  --seg-on-bg: var(--ink);
+  --seg-on-color: var(--on-ink);
+  --seg-on-shadow: none;
+
+  --tile-selected: var(--text);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  [data-theme='slab'] {
+    --bg: #141311;
+    --surface: #1b1a17;
+    --surface-2: #232220;
+    --hover: rgba(255, 244, 222, 0.055);
+    --border: #2f2d28;
+    --border-strong: #4b473f;
+    --text: #ece8df;
+    --dim: #a39c8e;
+    --faint: #756f62;
+    --ink: #ece8df;
+    --on-ink: #141311;
+    --accent: #ee7b3c;
+    --accent-text: #f28d55;
+    --danger: #ff8077;
+    --card-shadow: 0 22px 48px -14px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ════════════════════════════ ORCHARD — Apple-like ════════════════════════════
+   Soft corners, system blue, pill buttons, grouped lists. Follows light/dark. */
+[data-theme='orchard'] {
+  color-scheme: light dark;
+
+  --font: 'Inter Variable', 'Segoe UI Variable Text', system-ui, sans-serif;
+  --font-display: var(--font);
+  --mono: 'Inter Variable', 'Segoe UI Variable Text', system-ui, sans-serif;
+  --display-case: none;
+  --display-weight: 700;
+  --display-tracking: -0.022em;
+  --title-size: 20px;
+  --title-lh: 1.25;
+  --h1-size: 34px;
+
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface-2: #ececf1;
+  --hover: rgba(0, 0, 0, 0.045);
+  --border: rgba(60, 60, 67, 0.16);
+  --border-strong: rgba(60, 60, 67, 0.3);
+  --text: #1c1c1e;
+  --dim: #6c6c70;
+  --faint: #8e8e93;
+  --ink: #007aff;
+  --on-ink: #ffffff;
+  --accent: #007aff;
+  --accent-text: #0066d6;
+  --danger: #ff3b30;
+
+  --radius: 10px;
+  --btn-radius: 999px;
+  --radius-lg: 22px;
+
+  --card-bg: rgba(255, 255, 255, 0.97);
+  --card-tint: none;
+  --card-border: 1px solid rgba(60, 60, 67, 0.12);
+  --card-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.3), 0 2px 10px rgba(0, 0, 0, 0.1);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 20px;
+  --head-pad: 14px 12px 0 20px;
+  --head-bg: transparent;
+  --head-color: var(--dim);
+  --foot-bg: transparent;
+  --foot-border: 0 solid transparent;
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: rgba(120, 120, 128, 0.14);
+  --btn-border: 0 solid transparent;
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-color: var(--text);
+  --split-divider: 1px solid rgba(60, 60, 67, 0.2);
+  --primary-bg: var(--accent);
+  --primary-color: #ffffff;
+  --primary-border: 0 solid transparent;
+  --primary-shadow: none;
+  --primary-shadow-active: none;
+  --press: scale(0.96);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: var(--bg);
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: var(--surface);
+  --panel-border: 0 solid transparent;
+  --panel-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 10px 26px -14px rgba(0, 0, 0, 0.16);
+  --panel-filter: none;
+  --list-bg: var(--surface);
+  --list-border: 0 solid transparent;
+  --list-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 10px 26px -14px rgba(0, 0, 0, 0.16);
+  --list-pad: 0 18px;
+  --row-bleed: 0px;
+  --row-pad: 13px 0;
+  --row-border: 1px solid var(--border);
+  --row-last-border: 0 solid transparent;
+
+  --input-bg: rgba(120, 120, 128, 0.1);
+  --input-border: 1px solid transparent;
+  --input-shadow: none;
+  --seg-bg: rgba(120, 120, 128, 0.14);
+  --seg-border: 1px solid transparent;
+  --seg-radius: 9px;
+  --seg-shadow: none;
+  --seg-pad: 2px;
+  --seg-divider: 0 solid transparent;
+  --seg-on-bg: #ffffff;
+  --seg-on-color: var(--text);
+  --seg-on-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+
+  --tile-selected: var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme='orchard'] {
+    --bg: #000000;
+    --surface: #1c1c1e;
+    --surface-2: #2c2c2e;
+    --hover: rgba(255, 255, 255, 0.06);
+    --border: rgba(84, 84, 88, 0.55);
+    --border-strong: rgba(120, 120, 128, 0.5);
+    --text: #ffffff;
+    --dim: #aeaeb2;
+    --faint: #8e8e93;
+    --ink: #0a84ff;
+    --on-ink: #ffffff;
+    --accent: #0a84ff;
+    --accent-text: #409cff;
+    --danger: #ff453a;
+
+    --card-bg: rgba(44, 44, 46, 0.97);
+    --card-border: 1px solid rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.85), 0 2px 10px rgba(0, 0, 0, 0.5);
+    --btn-bg: rgba(120, 120, 128, 0.32);
+    --split-divider: 1px solid rgba(255, 255, 255, 0.14);
+    --panel-shadow: none;
+    --list-shadow: none;
+    --input-bg: rgba(120, 120, 128, 0.24);
+    --seg-bg: rgba(120, 120, 128, 0.24);
+    --seg-on-bg: #636366;
+    --seg-on-color: #ffffff;
+    --seg-on-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ════════════════════════════ VITRINE — glassmorphism ════════════════════════════
+   Frosted panels over soft colour. In the alert, the "glass" is a blurred snapshot of the screen
+   behind it (see glass.rs). Dark only. */
+[data-theme='vitrine'] {
+  color-scheme: dark;
+
+  --font: 'Outfit Variable', 'Segoe UI Variable Text', system-ui, sans-serif;
+  --font-display: var(--font);
+  --mono: 'Geist Mono Variable', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --display-case: none;
+  --display-weight: 500;
+  --display-tracking: -0.01em;
+  --title-size: 21px;
+  --title-lh: 1.25;
+  --h1-size: 30px;
+
+  --bg: #0a1018;
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  --hover: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.26);
+  --text: #f4f8fb;
+  --dim: rgba(228, 238, 246, 0.76);
+  --faint: rgba(228, 238, 246, 0.52);
+  --ink: #f4f8fb;
+  --on-ink: #0a1018;
+  --accent: #5eead4;
+  --accent-text: #7ff0de;
+  --danger: #ff9a9a;
+
+  --radius: 12px;
+  --btn-radius: 12px;
+  --radius-lg: 22px;
+
+  /* Translucent so a live backdrop-filter works (previews, manager). In the alert window the
+     blurred snapshot sits above this. If no snapshot could be taken, --card-fallback is used. */
+  --card-bg: rgba(16, 24, 36, 0.42);
+  --card-fallback: rgba(18, 26, 38, 0.94);
+  --card-tint: linear-gradient(150deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0.02) 100%),
+    rgba(14, 22, 34, 0.4);
+  --card-border: 1px solid rgba(255, 255, 255, 0.3);
+  --card-shadow: 0 26px 60px -18px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --card-backdrop: blur(26px) saturate(150%);
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 20px;
+  --head-pad: 14px 12px 0 20px;
+  --head-bg: transparent;
+  --head-color: var(--dim);
+  --foot-bg: rgba(255, 255, 255, 0.06);
+  --foot-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-blur: 16px;
+  --glass-sat: 1.5;
+  /* Lines the snapshot up with the screen: the card sits 40 px / 16 px into its window (+1 px border),
+     and the blurred layer starts 24 px outside the card. */
+  --snap-x: -17px;
+  --snap-y: -7px;
+
+  --btn-bg: rgba(255, 255, 255, 0.1);
+  --btn-border: 1px solid rgba(255, 255, 255, 0.22);
+  --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --btn-shadow-active: none;
+  --btn-color: var(--text);
+  --split-divider: 1px solid rgba(255, 255, 255, 0.2);
+  --primary-bg: #f4f8fb;
+  --primary-color: #0a1018;
+  --primary-border: 1px solid transparent;
+  --primary-shadow: 0 8px 22px -8px rgba(94, 234, 212, 0.6);
+  --primary-shadow-active: 0 2px 8px -4px rgba(94, 234, 212, 0.6);
+  --press: translateY(1px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: radial-gradient(55% 48% at 10% 6%, rgba(20, 184, 166, 0.55), transparent 70%),
+    radial-gradient(48% 44% at 92% 10%, rgba(245, 158, 11, 0.4), transparent 70%),
+    radial-gradient(56% 56% at 80% 94%, rgba(37, 99, 235, 0.5), transparent 70%),
+    radial-gradient(42% 42% at 6% 90%, rgba(239, 71, 111, 0.3), transparent 70%), #0a1018;
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: rgba(255, 255, 255, 0.075);
+  --panel-border: 1px solid rgba(255, 255, 255, 0.18);
+  --panel-shadow: 0 14px 44px -14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --panel-filter: blur(24px) saturate(150%);
+  --list-bg: rgba(255, 255, 255, 0.075);
+  --list-border: 1px solid rgba(255, 255, 255, 0.18);
+  --list-shadow: 0 14px 44px -14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --list-pad: 4px 18px;
+  --row-bleed: 0px;
+  --row-pad: 13px 0;
+  --row-border: 1px solid rgba(255, 255, 255, 0.1);
+  --row-last-border: 0 solid transparent;
+
+  --input-bg: rgba(255, 255, 255, 0.07);
+  --input-border: 1px solid rgba(255, 255, 255, 0.18);
+  --input-shadow: none;
+  --seg-bg: rgba(255, 255, 255, 0.07);
+  --seg-border: 1px solid rgba(255, 255, 255, 0.18);
+  --seg-radius: 12px;
+  --seg-shadow: none;
+  --seg-pad: 3px;
+  --seg-divider: 0 solid transparent;
+  --seg-on-bg: rgba(255, 255, 255, 0.92);
+  --seg-on-color: #0a1018;
+  --seg-on-shadow: 0 4px 14px -4px rgba(94, 234, 212, 0.55);
+
+  --tile-selected: var(--accent);
+}
+
+/* ════════════════════════════ BEIGE BOX — retro ════════════════════════════
+   1995: bevelled grey, pixel type, a navy title bar on every window. Light only. */
+[data-theme='beige'] {
+  color-scheme: light;
+
+  --bevel-out: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --bevel-in: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+
+  --font: 'Pixelify Sans Variable', 'Segoe UI', sans-serif;
+  --font-display: var(--font);
+  --mono: 'VT323 Nudge', 'VT323', 'Cascadia Mono', monospace;
+  --display-case: none;
+  --display-weight: 600;
+  --display-tracking: 0;
+  --title-size: 19px;
+  --title-lh: 1.2;
+  --h1-size: 26px;
+
+  --bg: #c0c0c0;
+  --surface: #c0c0c0;
+  --surface-2: #c0c0c0;
+  --hover: rgba(0, 0, 128, 0.13);
+  --border: #808080;
+  --border-strong: #000000;
+  --text: #000000;
+  --dim: #3d3d3d;
+  --faint: #666666;
+  --ink: #000000;
+  --on-ink: #ffffff;
+  --accent: #c40000;
+  --accent-text: #a80000;
+  --danger: #a80000;
+
+  --radius: 0px;
+  --btn-radius: 0px;
+  --radius-lg: 0px;
+
+  --card-bg: #c0c0c0;
+  --card-tint: none;
+  --card-border: 1px solid #000000;
+  --card-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080, 4px 4px 0 rgba(0, 0, 0, 0.4);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 3px;
+  --pad-x: 10px;
+  --head-pad: 2px 2px 2px 6px;
+  --head-bg: linear-gradient(90deg, #000080, #1084d0);
+  --head-color: #ffffff;
+  --foot-bg: transparent;
+  --foot-border: 0 solid transparent;
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: #c0c0c0;
+  --btn-border: 0 solid transparent;
+  --btn-shadow: var(--bevel-out);
+  --btn-shadow-active: var(--bevel-in);
+  --btn-color: #000000;
+  --split-divider: 1px solid #808080;
+  --primary-bg: #c0c0c0;
+  --primary-color: #000000;
+  --primary-border: 1px solid #000000;
+  --primary-shadow: var(--bevel-out);
+  --primary-shadow-active: var(--bevel-in);
+  --press: translate(1px, 1px);
+  --close-bg: #c0c0c0;
+  --close-shadow: var(--bevel-out);
+
+  --app-bg: #c0c0c0;
+  --titlebar-bg: linear-gradient(90deg, #000080, #1084d0);
+  --titlebar-color: #ffffff;
+  --panel-bg: #c0c0c0;
+  --panel-border: 1px solid #808080;
+  --panel-shadow: 1px 1px 0 #ffffff, inset 1px 1px 0 #ffffff;
+  --panel-filter: none;
+  --list-bg: #ffffff;
+  --list-border: 0 solid transparent;
+  --list-shadow: var(--bevel-in);
+  --list-pad: 4px 8px;
+  --row-bleed: 0px;
+  --row-pad: 9px 4px;
+  --row-border: 1px dotted #808080;
+  --row-last-border: 0 solid transparent;
+
+  --input-bg: #ffffff;
+  --input-border: 0 solid transparent;
+  --input-shadow: var(--bevel-in);
+  --seg-bg: #c0c0c0;
+  --seg-border: 0 solid transparent;
+  --seg-radius: 0px;
+  --seg-shadow: var(--bevel-out);
+  --seg-pad: 0px;
+  --seg-divider: 0 solid transparent;
+  --seg-on-bg: #c0c0c0;
+  --seg-on-color: #000000;
+  --seg-on-shadow: var(--bevel-in);
+
+  --tile-selected: #000080;
+}
+
+/* ════════════════════════════ SAFETY PIN — punk ════════════════════════════
+   A photocopied flyer: thick ink, hard shadows, hot pink, a little crooked. Light only. */
+[data-theme='punk'] {
+  color-scheme: light;
+
+  --font: 'Courier Prime', 'Courier New', monospace;
+  --font-display: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --mono: 'Courier Prime', 'Courier New', monospace;
+  --display-case: uppercase;
+  --display-weight: 400;
+  --display-tracking: 0.02em;
+  --title-size: 29px;
+  --title-lh: 1.08;
+  --h1-size: 40px;
+
+  --bg: #ebe5d2;
+  --surface: #f8f4e6;
+  --surface-2: #ebe5d2;
+  --hover: rgba(13, 13, 13, 0.07);
+  --border: #0d0d0d;
+  --border-strong: #0d0d0d;
+  --text: #0d0d0d;
+  --dim: #35332c;
+  --faint: #69665a;
+  --ink: #0d0d0d;
+  --on-ink: #f8f4e6;
+  --accent: #ff2d55;
+  --accent-text: #d1002f;
+  --danger: #d1002f;
+
+  --radius: 0px;
+  --btn-radius: 0px;
+  --radius-lg: 0px;
+
+  --card-bg: radial-gradient(rgba(13, 13, 13, 0.16) 0.7px, transparent 1px) 0 0 / 5px 5px, #f8f4e6;
+  --card-tint: none;
+  --card-border: 3px solid #0d0d0d;
+  --card-shadow: 7px 7px 0 #0d0d0d;
+  --card-backdrop: none;
+  --card-rotate: -1.2deg;
+  --card-pad: 0px;
+  --pad-x: 18px;
+  --head-pad: 12px 10px 0 18px;
+  --head-bg: transparent;
+  --head-color: var(--text);
+  --foot-bg: #0d0d0d;
+  --foot-border: 3px solid #0d0d0d;
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: #f8f4e6;
+  --btn-border: 2px solid #0d0d0d;
+  --btn-shadow: 3px 3px 0 #ff2d55;
+  --btn-shadow-active: 0 0 0 #ff2d55;
+  --btn-color: #0d0d0d;
+  --split-divider: 2px solid #0d0d0d;
+  --primary-bg: #ffe600;
+  --primary-color: #0d0d0d;
+  --primary-border: 2px solid #0d0d0d;
+  --primary-shadow: 3px 3px 0 #ff2d55;
+  --primary-shadow-active: 0 0 0 #ff2d55;
+  --press: translate(3px, 3px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: radial-gradient(rgba(13, 13, 13, 0.14) 0.8px, transparent 1.2px) 0 0 / 6px 6px, #ebe5d2;
+  --titlebar-bg: #0d0d0d;
+  --titlebar-color: #f8f4e6;
+  --panel-bg: #f8f4e6;
+  --panel-border: 3px solid #0d0d0d;
+  --panel-shadow: 6px 6px 0 #0d0d0d;
+  --panel-filter: none;
+  --list-bg: transparent;
+  --list-border: 0 solid transparent;
+  --list-shadow: none;
+  --list-pad: 0px;
+  --row-bleed: -8px;
+  --row-pad: 13px 8px;
+  --row-border: 2px dashed #0d0d0d;
+  --row-last-border: 2px dashed #0d0d0d;
+
+  --input-bg: #ffffff;
+  --input-border: 2px solid #0d0d0d;
+  --input-shadow: 3px 3px 0 #0d0d0d;
+  --seg-bg: #ffffff;
+  --seg-border: 2px solid #0d0d0d;
+  --seg-radius: 0px;
+  --seg-shadow: none;
+  --seg-pad: 0px;
+  --seg-divider: 2px solid #0d0d0d;
+  --seg-on-bg: #ffe600;
+  --seg-on-color: #0d0d0d;
+  --seg-on-shadow: none;
+
+  --tile-selected: #ff2d55;
+}
+
+/* ════════════════════════════ VOLTAGE — electric ════════════════════════════
+   Black glass, cyan current, one yellow button. Dark only. */
+[data-theme='voltage'] {
+  color-scheme: dark;
+
+  --font: 'Chakra Petch', 'Segoe UI', sans-serif;
+  --font-display: var(--font);
+  --mono: 'Share Tech Mono', 'Cascadia Mono', Consolas, monospace;
+  --display-case: uppercase;
+  --display-weight: 600;
+  --display-tracking: 0.03em;
+  --title-size: 20px;
+  --title-lh: 1.2;
+  --h1-size: 26px;
+
+  --bg: #050a10;
+  --surface: #0b141d;
+  --surface-2: #0e1a26;
+  --hover: rgba(0, 229, 255, 0.07);
+  --border: rgba(0, 229, 255, 0.22);
+  --border-strong: rgba(0, 229, 255, 0.55);
+  --text: #e6f7ff;
+  --dim: #8fb3c4;
+  --faint: #5f8396;
+  --ink: #f3ff00;
+  --on-ink: #050a10;
+  --accent: #00e5ff;
+  --accent-text: #38ecff;
+  --danger: #ff5d73;
+
+  --radius: 2px;
+  --btn-radius: 2px;
+  --radius-lg: 4px;
+
+  --card-bg: repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.04) 0 1px, transparent 1px 3px), #08121b;
+  --card-tint: none;
+  --card-border: 1px solid rgba(0, 229, 255, 0.7);
+  --card-shadow: 0 0 0 1px rgba(0, 229, 255, 0.12), 0 0 34px -4px rgba(0, 229, 255, 0.5),
+    inset 0 0 28px rgba(0, 229, 255, 0.07);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 18px;
+  --head-pad: 12px 10px 0 18px;
+  --head-bg: transparent;
+  --head-color: var(--dim);
+  --foot-bg: rgba(0, 229, 255, 0.05);
+  --foot-border: 1px solid rgba(0, 229, 255, 0.28);
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: transparent;
+  --btn-border: 1px solid rgba(0, 229, 255, 0.6);
+  --btn-shadow: inset 0 0 12px rgba(0, 229, 255, 0.12);
+  --btn-shadow-active: inset 0 0 18px rgba(0, 229, 255, 0.3);
+  --btn-color: #e6f7ff;
+  --split-divider: 1px solid rgba(0, 229, 255, 0.4);
+  --primary-bg: #f3ff00;
+  --primary-color: #050a10;
+  --primary-border: 1px solid #f3ff00;
+  --primary-shadow: 0 0 18px rgba(243, 255, 0, 0.5);
+  --primary-shadow-active: 0 0 8px rgba(243, 255, 0, 0.5);
+  --press: translateY(1px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    radial-gradient(60% 40% at 50% 0%, rgba(0, 229, 255, 0.15), transparent 70%), #050a10;
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: #0a131c;
+  --panel-border: 1px solid rgba(0, 229, 255, 0.45);
+  --panel-shadow: 0 0 30px -10px rgba(0, 229, 255, 0.45), inset 0 0 20px rgba(0, 229, 255, 0.05);
+  --panel-filter: none;
+  --list-bg: transparent;
+  --list-border: 0 solid transparent;
+  --list-shadow: none;
+  --list-pad: 0px;
+  --row-bleed: -8px;
+  --row-pad: 13px 8px;
+  --row-border: 1px solid rgba(0, 229, 255, 0.16);
+  --row-last-border: 1px solid rgba(0, 229, 255, 0.16);
+
+  --input-bg: #060d14;
+  --input-border: 1px solid rgba(0, 229, 255, 0.35);
+  --input-shadow: none;
+  --seg-bg: #060d14;
+  --seg-border: 1px solid rgba(0, 229, 255, 0.35);
+  --seg-radius: 2px;
+  --seg-shadow: none;
+  --seg-pad: 0px;
+  --seg-divider: 1px solid rgba(0, 229, 255, 0.35);
+  --seg-on-bg: #00e5ff;
+  --seg-on-color: #050a10;
+  --seg-on-shadow: 0 0 16px rgba(0, 229, 255, 0.55);
+
+  --tile-selected: #00e5ff;
+}
+
+/* ════════════════════════════ HANDBILL — old-fashioned ad ════════════════════════════
+   Cream paper, two-colour print, rubber stamps and double rules. Light only. */
+[data-theme='handbill'] {
+  color-scheme: light;
+
+  --font: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+  --font-display: 'Abril Fatface', 'Libre Caslon Text', Georgia, serif;
+  --mono: 'Libre Caslon Text', Georgia, serif;
+  --display-case: none;
+  --display-weight: 400;
+  --display-tracking: 0;
+  --title-size: 26px;
+  --title-lh: 1.12;
+  --h1-size: 36px;
+
+  --bg: #efe3c8;
+  --surface: #f6ecd4;
+  --surface-2: #eadcbc;
+  --hover: rgba(80, 50, 10, 0.07);
+  --border: #c9b78f;
+  --border-strong: #2a2118;
+  --text: #241c13;
+  --dim: #5b4c38;
+  --faint: #8a7859;
+  --ink: #241c13;
+  --on-ink: #f6ecd4;
+  --accent: #bf3326;
+  --accent-text: #a82a1e;
+  --danger: #a82a1e;
+
+  --radius: 2px;
+  --btn-radius: 2px;
+  --radius-lg: 3px;
+
+  --card-bg: radial-gradient(rgba(36, 28, 19, 0.14) 0.8px, transparent 1.1px) 0 0 / 4px 4px, #f6ecd4;
+  --card-tint: none;
+  --card-border: 4px double #2a2118;
+  --card-shadow: 6px 6px 0 rgba(42, 33, 24, 0.28), inset 0 0 42px rgba(150, 100, 30, 0.2);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 20px;
+  --head-pad: 14px 12px 0 20px;
+  --head-bg: transparent;
+  --head-color: var(--dim);
+  --foot-bg: transparent;
+  --foot-border: 3px double #2a2118;
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  --btn-bg: transparent;
+  --btn-border: 2px solid #2a2118;
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-color: #241c13;
+  --split-divider: 2px solid #2a2118;
+  --primary-bg: #bf3326;
+  --primary-color: #f6ecd4;
+  --primary-border: 2px solid #2a2118;
+  --primary-shadow: 3px 3px 0 #2a2118;
+  --primary-shadow-active: 0 0 0 #2a2118;
+  --press: translate(2px, 2px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: radial-gradient(rgba(36, 28, 19, 0.1) 0.8px, transparent 1.1px) 0 0 / 4px 4px, #efe3c8;
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: #f6ecd4;
+  --panel-border: 4px double #2a2118;
+  --panel-shadow: 5px 5px 0 rgba(42, 33, 24, 0.22);
+  --panel-filter: none;
+  --list-bg: transparent;
+  --list-border: 0 solid transparent;
+  --list-shadow: none;
+  --list-pad: 0px;
+  --row-bleed: -8px;
+  --row-pad: 13px 8px;
+  --row-border: 1px dotted #5b4c38;
+  --row-last-border: 1px dotted #5b4c38;
+
+  --input-bg: #fbf5e4;
+  --input-border: 1px solid #2a2118;
+  --input-shadow: none;
+  --seg-bg: transparent;
+  --seg-border: 2px solid #2a2118;
+  --seg-radius: 2px;
+  --seg-shadow: none;
+  --seg-pad: 0px;
+  --seg-divider: 2px solid #2a2118;
+  --seg-on-bg: #241c13;
+  --seg-on-color: #f6ecd4;
+  --seg-on-shadow: none;
+
+  --tile-selected: #bf3326;
+}
+
+/* ════════════════════════════ NUDGE — the app icon ════════════════════════════
+   Its own four colours: black ground, grey cards stacked behind, white type, and one orange alert on
+   top. The app is dark; the alert and quick-add are the orange card (see the touches below). Dark only. */
+[data-theme='nudge'] {
+  color-scheme: dark;
+
+  --font: 'Geist Variable', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-display: var(--font);
+  --mono: 'Geist Mono Variable', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --display-case: none;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --title-size: 20px;
+  --title-lh: 1.25;
+  --h1-size: 28px;
+
+  --bg: #1c1a17;
+  --surface: #2a2823;
+  --surface-2: #3a3732;
+  --hover: rgba(255, 255, 255, 0.07);
+  --border: #3a3732;
+  --border-strong: #5a564e;
+  --text: #ffffff;
+  --dim: #b4afa5;
+  --faint: #8a857b;
+  --ink: #ee7b3c;
+  --on-ink: #1c1a17;
+  --accent: #ee7b3c;
+  --accent-text: #f28d55;
+  --danger: #ff8077;
+
+  --radius: 10px;
+  --btn-radius: 999px;
+  --radius-lg: 20px;
+
+  /* The orange card, with the two grey cards of the icon peeking out beneath it. */
+  --card-bg: #ee7b3c;
+  --card-tint: none;
+  --card-border: 0 solid transparent;
+  --card-shadow: 0 16px 0 -8px #3a3732, 0 32px 0 -16px #2a2823, 0 30px 44px -14px rgba(0, 0, 0, 0.55);
+  --card-backdrop: none;
+  --card-rotate: 0deg;
+  --card-pad: 0px;
+  --pad-x: 22px;
+  --head-pad: 14px 12px 0 22px;
+  --head-bg: transparent;
+  --head-color: rgba(28, 26, 23, 0.86);
+  --foot-bg: transparent;
+  --foot-border: 1px solid rgba(28, 26, 23, 0.18);
+  --glass-blur: 0px;
+  --glass-sat: 1;
+
+  /* On the card: white pills for Snooze and the time chips, a black one for Done. */
+  --btn-bg: #ffffff;
+  --btn-border: 0 solid transparent;
+  --btn-shadow: none;
+  --btn-shadow-active: none;
+  --btn-color: #1c1a17;
+  --split-divider: 1px solid rgba(28, 26, 23, 0.16);
+  --primary-bg: #ee7b3c;
+  --primary-color: #1c1a17;
+  --primary-border: 0 solid transparent;
+  --primary-shadow: none;
+  --primary-shadow-active: none;
+  --press: translateY(1px);
+  --close-bg: transparent;
+  --close-shadow: none;
+
+  --app-bg: var(--bg);
+  --titlebar-bg: transparent;
+  --titlebar-color: var(--dim);
+  --panel-bg: var(--surface);
+  --panel-border: 1px solid var(--surface-2);
+  --panel-shadow: none;
+  --panel-filter: none;
+  --list-bg: var(--surface);
+  --list-border: 1px solid var(--surface-2);
+  --list-shadow: none;
+  --list-pad: 0 20px;
+  --row-bleed: 0px;
+  --row-pad: 14px 0;
+  --row-border: 1px solid var(--surface-2);
+  --row-last-border: 0 solid transparent;
+
+  --input-bg: var(--bg);
+  --input-border: 1px solid var(--surface-2);
+  --input-shadow: none;
+  --seg-bg: var(--bg);
+  --seg-border: 1px solid var(--surface-2);
+  --seg-radius: 999px;
+  --seg-shadow: none;
+  --seg-pad: 3px;
+  --seg-divider: 0 solid transparent;
+  --seg-on-bg: #ee7b3c;
+  --seg-on-color: #1c1a17;
+  --seg-on-shadow: none;
+
+  --tile-selected: #ee7b3c;
+}
+
+/* ════════════════════════════ Theme-specific touches ════════════════════════════
+   Things tokens can't express: stickers, stamps, title-bar buttons, glow.
+   Doubled class selectors out-rank the components' scoped styles. */
+
+/* — Beige Box: the alert's head is a window title bar — */
+[data-theme='beige'] .card .head.head .status {
+  color: #fff;
+}
+[data-theme='beige'] .card .head.head .dot {
+  background: #ffff00;
+}
+[data-theme='beige'] .card .head.head .quiet {
+  color: #c9d3ff;
+}
+[data-theme='beige'] .card .head.head .high {
+  color: #ffff00;
+}
+[data-theme='beige'] .card .close.close {
+  width: 20px;
+  height: 18px;
+  border-radius: 0;
+  color: #000;
+}
+[data-theme='beige'] .card .done.done {
+  font-weight: 700;
+}
+[data-theme='beige'] .wbtn.wbtn {
+  width: 22px;
+  height: 18px;
+  margin: 0 2px;
+  background: #c0c0c0;
+  color: #000;
+  box-shadow: var(--bevel-out);
+}
+[data-theme='beige'] .wbtn.wbtn:hover {
+  background: #c0c0c0;
+  color: #000;
+}
+[data-theme='beige'] .wbtn.wbtn:active {
+  box-shadow: var(--bevel-in);
+}
+
+/* — Safety Pin: status is a sticker, the date is highlighter yellow — */
+[data-theme='punk'] .card .status.status {
+  padding: 2px 9px;
+  border: 2px solid #0d0d0d;
+  background: #ffe600;
+  color: #0d0d0d;
+  font-weight: 700;
+  rotate: -2deg;
+}
+[data-theme='punk'] .card .status.status .dot {
+  display: none;
+}
+[data-theme='punk'] .card .head.head .high {
+  color: #d1002f;
+  font-weight: 700;
+}
+[data-theme='punk'] .page-title.page-title {
+  display: inline-block;
+  padding: 0 8px;
+  margin-left: -8px;
+  background: linear-gradient(transparent 56%, #ffe600 56%);
+}
+[data-theme='punk'] .card .foot.foot .snooze,
+[data-theme='punk'] .card .foot.foot .more {
+  color: #0d0d0d;
+}
+[data-theme='punk'] .card .foot .hint {
+  color: #f8f4e6;
+}
+[data-theme='punk'] .card .done.done {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* — Voltage: everything that's lit, glows — */
+[data-theme='voltage'] .card .status.status {
+  text-shadow: 0 0 10px currentColor;
+}
+[data-theme='voltage'] .card .dot.dot {
+  box-shadow: 0 0 10px var(--accent);
+}
+[data-theme='voltage'] .card .alert-title.alert-title {
+  text-shadow: 0 0 22px rgba(0, 229, 255, 0.35);
+}
+[data-theme='voltage'] .card .done.done {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* — Handbill: the status is a rubber stamp, the buttons are set in small caps — */
+[data-theme='handbill'] .card .status.status {
+  padding: 1px 9px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  rotate: -3deg;
+}
+[data-theme='handbill'] .card .status.status .dot {
+  display: none;
+}
+[data-theme='handbill'] .card .note.note {
+  font-style: italic;
+}
+[data-theme='handbill'] .card .done.done,
+[data-theme='handbill'] .primary.primary {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* — Vitrine: a soft light on the status dot — */
+[data-theme='vitrine'] .card .dot.dot {
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* — Nudge: the alert is the icon's orange card, so inside it the page's white-on-black flips to black-on-orange.
+     The :not() keeps this to cards whose nearest theme is Nudge: the other themes' previews in Settings
+     are nested inside the live (Nudge) page and must not pick it up. — */
+[data-theme='nudge'] .card:not([data-theme='nudge'] [data-theme]:not([data-theme='nudge']) .card) {
+  --text: #1c1a17;
+  --dim: rgba(28, 26, 23, 0.86);
+  --faint: rgba(28, 26, 23, 0.76);
+  --accent: #1c1a17;
+  --accent-text: #1c1a17;
+  --danger: #5c0f0a;
+  --hover: rgba(28, 26, 23, 0.1);
+  --primary-bg: #1c1a17;
+  --primary-color: #ffffff;
+}
+[data-theme='nudge'] .card:not([data-theme='nudge'] [data-theme]:not([data-theme='nudge']) .card) .high.high {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

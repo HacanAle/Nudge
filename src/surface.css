@@ -1,0 +1,48 @@
+/*
+ * The floating card surface shared by the alert and the quick-add window.
+ * Everything comes from theme tokens; see themes.css.
+ */
+.card {
+  position: relative;
+  isolation: isolate;
+  padding: var(--card-pad);
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: var(--card-backdrop);
+  rotate: var(--card-rotate);
+}
+
+/* Glass theme, real floating window: a blurred snapshot of the screen behind the card (set from the
+   window's stage). Over-sized so the blur has pixels to sample at the edges; the card's overflow clips it. */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -24px;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--snap, none);
+  background-repeat: no-repeat;
+  background-size: var(--snap-w, 480px) var(--snap-h, 480px);
+  background-position: var(--snap-x, 0) var(--snap-y, 0);
+  filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+}
+
+/* Tint and sheen above the snapshot, below the content. */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--card-tint);
+}
+
+.card > * {
+  position: relative;
+  z-index: 2;
+}
