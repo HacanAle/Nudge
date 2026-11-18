@@ -1,6 +1,6 @@
 name: Release
 
-# Push a tag like v0.1.0 to build the Windows installer and attach it to a draft GitHub release.
+# Push a tag like v0.1.0 to build the Windows installer and publish it as a GitHub release.
 on:
   push:
     tags: ['v*']
@@ -27,6 +27,20 @@ jobs:
 
       - run: npm ci
 
+      # An unpublished draft left by an earlier attempt for the same tag would clash with the release below.
+      # Published releases are never touched.
+      - name: Remove a leftover draft for this tag
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/releases" --paginate \
+            --jq ".[] | select(.draft and .tag_name == \"$GITHUB_REF_NAME\") | .id" |
+          while read -r id; do
+            echo "Deleting draft release $id"
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$id"
+          done
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,8 +48,24 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: Nudge ${{ github.ref_name }}
           releaseBody: |
-            Download `Nudge_*_x64-setup.exe` below and run it. No admin rights needed.
+            Reminders for Windows that wait for an answer. A card drops in at the top of your screen and stays
+            until you press **Done** or **Snooze**, without taking the keyboard from what you're typing.
 
-            The installer is not code-signed yet, so Windows SmartScreen may say "Windows protected your PC".
+            ### Install
+            Download **`Nudge_*_x64-setup.exe`** below and run it. It installs for your user only, so no admin
+            rights are needed.
+
+            The installer isn't code-signed yet, so Windows SmartScreen may say *"Windows protected your PC"*.
             Choose **More info → Run anyway**.
-          releaseDraft: true
+
+            ### What's in it
+            - Quick add from anywhere with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd>, in plain language
+              (`call mom tomorrow 5pm`, `standup every weekday 9:30`)
+            - Repeats, snooze that keeps your repeat time, priorities, notes with clickable links
+            - **Join** button for Teams / Zoom / Meet links in a note
+            - <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd> / <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd> answer the alert from any app
+            - Quiet during presentations: full-screen apps hold alerts back, and alerts never show up in screen
+              shares or recordings
+            - Ring again until answered, export / import backup, eight themes
+            - Works offline: no account, no telemetry
+          releaseDraft: false

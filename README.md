@@ -157,7 +157,7 @@ npm run check                          # theme guard + svelte-check
 npm run build; cd src-tauri; cargo test --lib   # scheduling, recurrence, snooze, quiet mode, backup, shortcuts
 ```
 
-Pushing a `v*` tag builds the installer on GitHub Actions and attaches it to a draft release.
+Pushing a `v*` tag builds the installer on GitHub Actions and publishes it as a release.
 
 ## How it works
 
